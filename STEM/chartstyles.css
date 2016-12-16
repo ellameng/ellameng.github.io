@@ -1,0 +1,50 @@
+
+
+/*http://stackoverflow.com/questions/32837650/how-to-change-color-of-text-in-c3-js-charts*/
+/*   Y Axis   */
+.c3-axis-y text {
+   /*fill: red;*/
+   font-size:12px;
+   font-weight: bold;
+}
+
+/*   X Axis   */
+.c3-axis-x text {
+    font-size:12px;
+    /*fill:purple;*/
+    font-weight: bold;
+}
+
+
+/*   whitespace   */
+.exploration_text {
+	/*margin: 70px;*/
+	padding: 25px 50px;
+}
+
+.button {
+	/*margin: 70px;*/
+	text-align: center;
+}
+
+/*   Chart titles   */
+/* https://github.com/c3js/c3/blob/master/c3.js#L5026 */
+.c3-title {
+  /*fill: red;*/
+  font-size: 16px;
+  font-weight: bold;
+}
+
+h1, #chart0 {
+	/*padding: 0px 10px;*/
+	text-align: center;
+}
+
+div {
+	margin: 5px 0px;
+}
+
+/*#text2 {
+	padding: 0px 0px;
+	border-style: dashed;
+}*/

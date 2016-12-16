@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <link href="https://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
+    <script src="https://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <!-- Load c3.css -->
+    <link href="c3.css" rel="stylesheet" type="text/css">
+    <link href="d3.slider.css" rel="stylesheet" type="text/css">
+    <link href="chartstyles.css" rel="stylesheet" type="text/css">
+
+    <!-- Load d3.js and c3.js -->
+    <script src="c3.min.js"></script>
+    <script src="d3.slider.js"></script>
+
+    <!-- <link href="style.css" rel="stylesheet"> -->
+    <body>
+      <h1>Minority Under-Representation in STEM Education</h1>
+      <div class = "col-md-12 exploration_text" id="text1">
+        <p>Despite significant efforts made by America’s science and engineering sectors, women and minorities remain significantly underrepresented in STEM education and employment. People within STEM areas work towards bettering the world through the advancement and use of technology. However, a lack of diversity affects this work in a number of ways.</p>
+
+<p>Since less women and people from minority groups opt for STEM related education and careers, the talent pool that the tech industry can draw from is significantly reduced. Additionally, when facing complex problems, it helps immensely to have a varied set of experiences and backgrounds to call upon. Regular interactions between people with different backgrounds can also help reduce discrimination, prejudice and misunderstandings associated with a lack of familiarity.</p>
+      </div>
+
+
+
+
+
+      <div class="container">
+        <div class="row">
+          <div class='col-md-6' >
+            <div id="chart0">
+              <!-- <p>Lorem ipsum dolor sit amet</p> -->
+
+            </div>
+          </div>
+          <div class='col-md-6' >
+            <div id="chart0a">
+              <!-- <p>Lorem ipsum dolor sit amet</p> -->
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class = "col-md-12 exploration_text" id="text2">
+        <h3>Expected vs. Observed Degree Attainment</h3>
+        <p>The graphs above represent overall STEM degree attainment for all demographic groups, at the Bachelor’s, Master’s, and Doctoral levels.  The next series of graphs focus on minority women, which are often grouped together in reporting.  White males are included in the chart for comparison.</p>
+
+
+        <p>In order to account for differences within the population size of the demographic groups, we use the concept of <strong>“over / under”</strong>.  Given a demographic’s proportion within the overall US population, is that demographic receiving more or less than the expected amount of STEM degrees?  For example, if Black or African American Women represented 6.5% of the US population in 2012, did they receive more, or less, than 6.5% of the STEM degrees in that year?  The difference between the <strong>expected</strong> and <strong>observed</strong> percentage of degrees received is shown in the graphs below.</p>
+
+
+        <p><strong>Instructions: </strong><br>
+        Toggle demographics on or off by clicking on their label within the legend.  Click the ‘Show All’ button to return the chart to its original state.  Explore the details within a particular year by hovering over the corresponding date in the line chart.</p>
+      </div>
+
+<!--       <div class="container">
+        <div class="row">
+          <div class= "col-md-6" >
+          <div id="slider"></div>
+          <h2>Highlight: <span id="slidertext">2012</span></h2>
+        </div>
+      </div>
+      </div> -->
+
+      <div class="container">
+          <div class="row">
+            <div class= "col-md-8" >
+                <div id="chart1"></div>
+                <div class ='button'>
+                  <button class='small' onclick='c1all_1();'>Show All</button>
+                </div>
+            </div>
+            <div class= "col-md-4" >
+              <p></p>
+              <p></p>
+              <p></p>
+                <div id="chart2"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class= "col-md-8" >
+                <div id="chart3"></div>
+                <div class ='button'>
+                 <button class='small' onclick='c3all_1();'>Show All</button>
+               </div>
+            </div>
+            <div class= "col-md-4" >
+                <div id="chart4"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class= "col-md-8" >
+                <div id="chart5"></div>
+                <div class ='button'>
+                 <button class='small' onclick='c5all_1();'>Show All</button>
+               </div>
+            </div>
+            <div class= "col-md-4" >
+                <div id="chart6"></div>
+            </div>
+        </div>
+    </div>
+
+      <div class = "col-md-12 exploration_text" id="text3">
+        <p>We can see that within the demographic groups selected, White Men are awarded Science and Engineering Bachelor’s and Master’s degrees at a rate of 3-5 percent higher than would be expected based on their proportion within the population, and this increases at the Doctoral level to over 10 percent higher than their demographic proportion.  </p>
+
+
+
+
+
+
+<p>What other trends did you notice within the data?  </p>
+      </div>
+
+
+
+
+      <script type="text/javascript">
+
+      // B_dataset={"2001":{race1:30,race2:130,race3:100},"2002":{race1:100,race2:230,race3:400},"2003":{race1:180,race2:330,race3:250}}
+      // M_dataset={"2001":{race1:60,race2:190,race3:200},"2002":{race1:190,race2:280,race3:330},"2003":{race1:120,race2:230,race3:150}}
+      // D_dataset={"2001":{race1:170,race2:230,race3:300},"2002":{race1:220,race2:430,race3:500},"2003":{race1:160,race2:130,race3:250}}
+      // race=["race1","race2","race3"]
+      // degree=["B","M","D"]
+      // year=["2001","2002","2003"]
+      // d3.slider().value("2012")
+      // d3.slider().value(9);  //test because it's the 10th month with 0 index
+      d3.select('#slider').call(d3.slider().on("slide", function(evt, value) {
+      // d3.select('#slider').call(d3.slider().value("2012").on("slide", function(evt, value) {
+      d3.select('#slidertext').text(value.getFullYear());
+
+      }).scale(d3.time.scale().domain([new Date(2001,1,1), new Date(2012,1,1)])).axis(d3.svg.axis()).snap(true).value(new Date(2012,1,1)));
+
+  //   d3.select('#slider').call(d3.slider().scale(d3.time.scale().domain([new Date(2002,1,1), new Date(2014,1,1)])).axis(d3.svg.axis()).snap(true).value(new Date(2003,1,1)).on("slide", function(evt, value) {
+  //   d3.select('#slidertext').text(value);
+  // }));
+    //   d3.select('#slider').call(d3.slider().on("slide", function(evt, value) {
+    //   d3.select('#slidertext').text(value);
+    // }));
+
+
+  // Data for the overall degrees received by demographic as the first chart (or two?), which will extend all the way across the page
+  // Originally envisioned as F/M and Demographic breakdowns
+
+    var chart0 = c3.generate({
+title: {
+  text: "STEM Degrees in Higher Education"
+},
+
+  data: {
+      x: 'x',
+        xFormat: '%Y', // 'xFormat' can be used as custom format of 'x'
+      columns: [
+          ['x', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012'],
+          // Tick titles get cut off for longer tic
+          // This is a known issue per https://github.com/c3js/c3/issues/219
+          // Workaround?  Add padding
+
+
+//            ['x', '20130101', '20130102', '20130103', '20130104', '20130105', '20130106'],
+          ['Men', 228727,242386,251380,258153,263774,268406,274080,279167,288951,303564,321605],
+          ['Women', 233997,245600,255202,261850,267539,271353,277635,283636,291559,306557,325606],
+      ],
+      // onmouseover: function (i) { console.log("i", i); },
+      onmouseover: function (d,i) {
+        // return function(d){
+        console.log("onmouseout", d, i);
+        // chart2.unload({
+        //   ids: [
+        //       ["White Men", "Asian Women","Black or African American Women", "Hispanic or Latino Women", "American Indian or Alaska Native Women"]
+        //     ]
+        // });
+
+
+          // chart0a.load({
+          //   columns: [
+          //       [d.id, d.value]
+          //     ]
+          // });
+        // }
+      }
+      // onmouseout: function (d, i) { console.log("onmouseout", d, i); },
+
+  },
+  //http://stackoverflow.com/questions/32457291/how-to-format-number-in-d3-js-c3-js
+  tooltip: {
+        format: {
+            value: function(value) {
+                return d3.format(",")(value)
+            }
+        }
+    },
+  grid: {
+        y: {
+            lines: [
+                {value: 0, text: '', position: 'middle'}
+            ]
+        }
+    },
+  axis: {
+      x: {
+          type: 'timeseries',
+          tick: {
+              // fit: true,
+              format: '%Y',
+              culling: false,
+          }
+      }
+  },
+  padding: {  //https://github.com/c3js/c3/issues/219
+    // left: 50,
+    right: 10
+  },
+  bindto: '#chart0'
+});
+
+
+
+var chart0a = c3.generate({
+title: {
+  text: "STEM Degrees in Higher Education"
+},
+
+  data: {
+      x: 'x',
+        xFormat: '%Y', // 'xFormat' can be used as custom format of 'x'
+      columns: [
+          ['x', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012'],
+          // Tick titles get cut off for longer tic
+          // This is a known issue per https://github.com/c3js/c3/issues/219
+          // Workaround?  Add padding
+
+
+//            ['x', '20130101', '20130102', '20130103', '20130104', '20130105', '20130106'],
+          ['White', 336938,353178,364507,372150,379799,384357,390047,395668,404186,421380,443601],
+          ['Asian', 45982,49081,51541,53838,54999,56304,58420,59996,62458,65138,67764],
+          ['Black or African American', 41818,44551,47004,48317,48868,49565,51000,52114,54623,58277,62735],
+          ['Hispanic or Latino', 34766,37666,39580,41848,43620,45519,48181,50755,54867,61161,68995],
+          ['American Indian or Alaska Native', 3220,3510,3950,3850,4027,4014,4067,4270,4376,4165,4116],
+      ],
+      // onmouseover: function (i) { console.log("i", i); },
+      // onmouseover: function (d,i) {
+      //   // return function(d){
+      //   console.log("onmouseout", d, i);
+      //   // chart2.unload({
+      //   //   ids: [
+      //   //       ["White Men", "Asian Women","Black or African American Women", "Hispanic or Latino Women", "American Indian or Alaska Native Women"]
+      //   //     ]
+      //   // });
+
+
+      //     chart2.load({
+      //       columns: [
+      //           [d.id, d.value]
+      //         ]
+      //     });
+      //   // }
+      // }
+      // onmouseout: function (d, i) { console.log("onmouseout", d, i); },
+
+  },
+
+
+
+  //http://stackoverflow.com/questions/32457291/how-to-format-number-in-d3-js-c3-js
+  tooltip: {
+        format: {
+            value: function(value) {
+                return d3.format(",.0f")(value)
+            }
+        }
+    },
+  grid: {
+        y: {
+            lines: [
+                {value: 0, text: '', position: 'middle'}
+            ]
+        }
+    },
+  axis: {
+      x: {
+          type: 'timeseries',
+          tick: {
+              // fit: true,
+              format: '%Y',
+              culling: false,
+          }
+      }
+  },
+  padding: {  //https://github.com/c3js/c3/issues/219
+    // left: 50,
+    right: 10
+  },
+  bindto: '#chart0a'
+});
+
+
+
+
+
+    //////// Bachelor's Degrees
+  var chart1 = c3.generate({
+  title: {
+  text: "Bachelor's Degrees: Over/Under"
+
+},
+
+  data: {
+      x: 'x',
+        xFormat: '%Y', // 'xFormat' can be used as custom format of 'x'
+      columns: [
+          ['x', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012'],
+          // Tick titles get cut off for longer tic
+          // This is a known issue per https://github.com/c3js/c3/issues/219
+          // Workaround?  Add padding
+
+
+//            ['x', '20130101', '20130102', '20130103', '20130104', '20130105', '20130106'],
+          ['White Men', 2.6475, 2.9719, 3.0858, 3.2169, 3.4697, 3.7497, 3.684, 3.7351, 4.0699, 3.8237, 3.9884],
+          ['Asian Women', 2.7094, 2.6245, 2.7022, 2.7617, 2.842, 2.8418, 2.866, 2.9058, 2.7803, 2.6231, 2.3215],
+          ['Black or African American Women', -0.619, -0.655, -0.533, -0.514, -0.649, -0.666, -0.691, -0.664, -0.699, -0.58, -0.553],
+          ['Hispanic or Latino Women', -2.168, -2.225, -2.34, -2.343, -2.453, -2.484, -2.447, -2.431, -2.72, -2.49, -2.501],
+          ['American Indian or Alaska Native Women', 0, 0.0194, 0.0396, 0.0243, 0.0466, 0.0269, 0.0109, 0.0381, 0.0421, 0.0025, -0.013],
+      ],
+      axes: {
+            data1: 'x'
+        },
+      // onmouseover: function (i) { console.log("i", i); },
+      onmouseover: function (d,i) {
+        // return function(d){
+        // console.log("onmouseout", d, i);
+        // chart2.unload({
+        //   ids: [
+        //       ["White Men", "Asian Women","Black or African American Women", "Hispanic or Latino Women", "American Indian or Alaska Native Women"]
+        //     ]
+        // });
+
+
+          chart2.load({
+            columns: [
+                [d.id, d.value]
+
+              ]
+          });
+          d3.select('#chart2 .c3-title').node().innerHTML = d.x.getFullYear()+" Bachelor's Degrees: Over/Under";
+        // }
+      }
+      // onmouseout: function (d, i) { console.log("onmouseout", d, i); },
+
+  },
+// tried a subchart for interaction, but it doesn't look good at all
+  // subchart: {
+  //       show: true
+  //   },
+  //http://stackoverflow.com/questions/32457291/how-to-format-number-in-d3-js-c3-js
+  legend: {
+          // position: 'right'
+      },
+  tooltip: {
+        format: {
+            value: function(value) {
+                return d3.format(",.4f")(value)
+            }
+        }
+    },
+  grid: {
+        x: {
+          // show: true
+        },
+        y: {
+            // show: true,
+            lines: [
+                {value: 0, text: '', position: 'middle'}
+            ]
+        }
+    },
+  axis: {
+    y: {
+       label: '%',
+       tick: {
+        format: d3.format(",.2f")
+       }
+   },
+      x: {
+          // padding: {right: 1000000},
+          type: 'timeseries',
+          tick: {
+              // fit: true,
+              format: '%Y',
+              culling: false,
+          }
+        }
+
+  },
+  padding: {  //https://github.com/c3js/c3/issues/219
+    // left: 50,
+    right: 10
+  },
+  bindto: '#chart1'
+});
+
+
+//////// Bachelor's Degrees
+var chart2 = c3.generate({
+  title: {
+  text: "2012 Bachelor's Degrees: Over/Under"
+},
+     data: {
+         columns: [   // 2012 values
+              ['White Men',3.98847744470511],
+              ['Asian Women',2.32158702906576],
+              ['Black or African American Women',-0.553300162105413],
+              ['Hispanic or Latino Women',-2.50123618320842],
+              ['American Indian or Alaska Native Women',-0.0138563378707741]
+         ],
+         type: 'bar'
+
+     },
+     legend: {
+             show: false
+     },
+     bar: {
+         width: {
+             ratio: 0.5 // this makes bar width 50% of length between ticks
+         }
+         // or
+         //width: 100 // this makes bar width 100px
+     },
+      tooltip: {
+        format: {
+         title: function(id) {
+         return ""
+         },
+            value: function(value) {
+                return d3.format(",.4f")(value)
+            }
+        },
+        grouped: false,
+    },
+    grid: {
+          // x: {
+          //   show: true
+          // },
+          y: {
+              show: true,
+              lines: [
+                  {value: 0, text: '', position: 'middle'}
+              ]
+          }
+      },
+     axis: {
+       y: {
+          label: '%',
+          max: 4,
+            min: -4,
+      },
+         // rotated: true,
+         x: {
+             // label: 'category',
+             tick: {
+               values: [100]
+             }
+         },
+
+
+
+
+},
+     bindto: '#chart2'
+});
+
+////////////  Master's Degrees
+var chart3 = c3.generate({
+  title: {
+  text: "Master's Degrees: Over/Under"
+},
+data: {
+x: 'x',
+// x: 'date',
+  xFormat: '%Y', // 'xFormat' can be used as custom format of 'x'
+columns: [
+  ['x', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012'],
+//            ['x', '20130101', '20130102', '20130103', '20130104', '20130105', '20130106'],
+  ['White Men', 5.18294027404585, 4.4779646197058, 4.27809442104437, 4.42972554190916, 4.33203888783781, 4.25081595106024, 4.08514787586612, 3.89955340669831, 4.17000757383137, 4.74758388849824, 5.59639878310759],
+  ['Asian Women', 2.51518016041904, 2.69710641955708, 2.78009278896121, 2.85461375356409, 2.50604476222373, 2.62684109499712, 2.54462599337436, 2.41666137512898, 2.23719247943909, 2.14366773582622, 1.6060096019731],
+  ['Black or African American Women', -0.600755526188912, -0.302130566418982, -0.185175575739577, -0.175625597700735, -0.174510249394619, -0.0100877692063905, 0.427281699778458, 0.561619094286791, 0.814018142405024, 0.655010574553682, 0.78667538832152],
+  ['Hispanic or Latino Women', -3.35073921734358, -3.4617466095083, -3.40103826622463, -3.47114549674127, -3.42858217920907, -3.37697268229571, -3.56566920449367, -3.59201132325065, -3.81853322412842, -3.84253670231897, -3.99522224339664],
+  ['American Indian or Alaska Native Women', -0.0557716208074425, -0.0488736260961482, 0.0220583793472582, -0.0458561289914228, 0.00563698461902018, -0.0291342974453001, -0.0158865242198788, -0.0362145471842451, 0.0243587904642626, -0.0690717553005454, -0.061956115981808],
+
+],
+// onmouseover: function (i) { console.log("i", i); },
+onmouseover: function (d,i) {
+  // return function(d){
+  console.log("onmouseout", d, i);
+  // chart4.unload({
+  //   ids: [
+  //       // ["race1", "race2","race3"]
+  //       // why unload the data?
+  //       ["White Men"]
+  //     ]
+  // });
+
+
+    chart4.load({
+      columns: [
+          [d.id, d.value]
+        ]
+    });
+    d3.select('#chart4 .c3-title').node().innerHTML = d.x.getFullYear()+" Master's Degrees: Over/Under";
+  // }
+}
+// onmouseout: function (d, i) { console.log("onmouseout", d, i); },
+
+},
+
+tooltip: {
+        format: {
+            value: function(value) {
+                return d3.format(",.4f")(value)
+            }
+        }
+    },
+grid: {
+      x: {
+        // show: true
+      },
+      y: {
+          // show: true,
+          lines: [
+              {value: 0, text: '', position: 'middle'}
+          ]
+      }
+  },
+axis: {
+  y: {
+     label: '%',
+     tick: {
+        format: d3.format(",.2f")
+       }
+ },
+x: {
+    type: 'timeseries',
+    tick: {
+        format: '%Y',
+        // rotate: 90,
+        // fit: true,
+        // multiline: false,
+        culling: false,
+        // multiline: true
+    },
+    height: 50
+}
+},
+padding: {  //https://github.com/c3js/c3/issues/219
+    // left: 50,
+    right: 10
+  },
+bindto: '#chart3'
+});
+
+
+////////////  Master's Degrees
+var chart4 = c3.generate({
+  title: {
+  text: "2012 Master's Degrees: Over/Under"
+},
+data: {
+   columns: [
+        ['White Men',5.59639878310759],
+        ['Asian Women',1.6060096019731],
+        ['Black or African American Women',0.78667538832152],
+        ['Hispanic or Latino Women',-3.99522224339664],
+        ['American Indian or Alaska Native Women',-0.061956115981808]
+   ],
+   type: 'bar',
+   // labels: true,
+   // labels: {
+   //  format: {
+   //          value: function(value) {
+   //              return d3.format(",.4f")(value)
+   //          }
+   //      }
+   //    }
+},
+legend: {
+        show: false
+    },
+tooltip: {
+  format: {
+    title: function(id) {
+    return ""
+    },
+  //   title: function(id) {
+  //   return (id)
+  // },
+      value: function(value) {
+          return d3.format(",.4f")(value)
+      }
+  },
+  grouped: false,
+},
+bar: {
+   width: {
+       ratio: 0.5 // this makes bar width 50% of length between ticks
+   }
+   // or
+   //width: 100 // this makes bar width 100px
+},
+
+grid: {
+      // x: {
+      //   show: true
+      // },
+      y: {
+          show: true,
+          lines: [
+              {value: 0, text: '', position: 'middle'}
+          ]
+      }
+  },
+
+axis: {
+  y: {
+      max: 6,
+      min: -6,
+     label: '%'
+ },
+   // rotated: true,
+   x: {
+       // label: 'category',
+       tick: {
+         values: [100]
+       }
+   },
+
+
+
+
+},
+bindto: '#chart4'
+});
+/////////
+var chart5 = c3.generate({
+   title: {
+  text: "Doctoral Degrees: Over/Under"
+},
+data: {
+x: 'x',
+  xFormat: '%Y', // 'xFormat' can be used as custom format of 'x'
+columns: [
+    ['x', '2002', '2003', '2004', '2005', '2006', '2007', '2008', '2009', '2010', '2011', '2012'],
+//            ['x', '20130101', '20130102', '20130103', '20130104', '20130105', '20130106'],
+['White Men', 11.5986, 11.8774, 12.2902, 11.3705, 11.2723, 11.147, 10.942, 10.7077, 11.6191, 10.8757, 12.0091],
+['Asian Women', 2.46216, 2.15596, 2.34063, 2.61389, 2.91242, 2.64106, 3.08632, 2.93979, 3.14628, 3.08512, 2.90323],
+['Black or African American Women', -4.0333, -3.9891, -3.715, -3.9639, -3.8147, -3.9485, -3.8568, -3.5647, -3.7782, -3.6548, -3.8735],
+['Hispanic or Latino Women', -4.0601, -4.3135, -4.4816, -4.4175, -4.4411, -4.5441, -4.3307, -4.7778, -5.1314, -4.9025, -5.2587],
+['American Indian or Alaska Native Women', 0.14979, 0.19174, 0.19171, 0.13639, -0.0117, 0.07858, 0.00214, 0.04602, -0.0568, 0.03804, -0.078],
+],
+// onmouseover: function (i) { console.log("i", i); },
+onmouseover: function (d,i) {
+  // return function(d){
+  console.log("onmouseout", d, i);
+  // chart4.unload({
+  //   ids: [
+  //       // ["race1", "race2","race3"]
+  //       // why unload the data?
+  //       ["White Men"]
+  //     ]
+  // });
+
+
+    chart6.load({
+      columns: [
+          [d.id, d.value]
+        ]
+    });
+      d3.select('#chart6 .c3-title').node().innerHTML = d.x.getFullYear()+" Doctoral Degrees: Over/Under";
+  // }
+}
+// onmouseout: function (d, i) { console.log("onmouseout", d, i); },
+
+},
+tooltip: {
+        format: {
+            value: function(value) {
+                return d3.format(",.4f")(value)
+            }
+        }
+    },
+  grid: {
+        x: {
+          // show: true
+        },
+        y: {
+            // show: true,
+            lines: [
+                {value: 0, text: '', position: 'middle'}
+            ]
+        }
+    },
+axis: {
+  y: {
+     label: '%',
+     tick: {
+        format: d3.format(",.2f")
+       }
+ },
+x: {
+    type: 'timeseries',
+    tick: {
+        format: '%Y',
+        // format: function (x) { return x.getFullYear(); },
+        // rotate: 75,
+        // multiline: false,
+        culling: false,
+    },
+    // height: 50
+}
+},
+padding: {  //https://github.com/c3js/c3/issues/219
+    // left: 50,
+    right: 10
+  },
+bindto: '#chart5'
+});
+
+
+var chart6 = c3.generate({
+  title: {
+  text: "2012 Doctoral Degrees: Over/Under"
+},
+data: {
+   columns: [
+        ['White Men',12.0091],
+        ['Asian Women',2.90323],
+        ['Black or African American Women',-3.8735],
+        ['Hispanic or Latino Women',-5.2587],
+        ['American Indian or Alaska Native Women',-0.078]
+   ],
+   type: 'bar',
+   // labels: true,
+   // labels: {
+   //  format: {
+   //          value: function(value) {
+   //              return d3.format(",.4f")(value)
+   //          }
+   //      }
+   //    }
+},
+legend: {
+        show: false
+    },
+tooltip: {
+  format: {
+  //   title: function(id) {
+  //   return (id)
+  // },
+      title: function(id) {
+      return ""
+      },
+      value: function(value) {
+          return d3.format(",.4f")(value)
+      }
+  },
+  grouped: false,
+},
+grid: {
+      // x: {
+      //   show: true
+      // },
+      y: {
+          show: true,
+          lines: [
+              {value: 0, text: '', position: 'middle'}
+          ]
+      }
+  },
+axis: {
+  y: {
+      max: 12,
+      min: -6,
+     label: '%'
+ },
+   // rotated: true,
+   x: {
+       // label: 'category',
+       tick: {
+         values: [100]
+       }
+   },
+
+
+
+
+},
+bindto: '#chart6'
+});
+
+function c1all_1() {
+  chart1.show(['White Men', 'Asian Women', 'American Indian or Alaska Native Women', 'Black or African American Women', 'Hispanic or Latino Women']);
+}
+function c3all_1() {
+  chart3.show(['White Men', 'Asian Women', 'American Indian or Alaska Native Women', 'Black or African American Women', 'Hispanic or Latino Women']);
+}
+function c5all_1() {
+  chart5.show(['White Men', 'Asian Women', 'American Indian or Alaska Native Women', 'Black or African American Women', 'Hispanic or Latino Women']);
+}
+
+
+      </script>
+    </body>
+  </head>
+</html>
